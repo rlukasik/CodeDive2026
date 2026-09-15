@@ -13,7 +13,7 @@ struct MatrixMultiplier<MultiplicationPolicy::Simd> {
         using RhsSimd = std::simd::vec<typename RHS::value_type>;
         using LhsRange = std::span<const typename LHS::value_type, LhsSimd::size()>;
         using RhsRange = std::span<const typename RHS::value_type, RhsSimd::size()>;
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHS::columns>;
+        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHS::columns, MultiplicationPolicy::Simd>;
         ResultType result{};
         const auto rhsT = rhs.transpose();
         for (size_t i = 0; i < LHS::rows; ++i) {

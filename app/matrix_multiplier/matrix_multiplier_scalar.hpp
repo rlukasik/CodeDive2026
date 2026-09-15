@@ -7,7 +7,7 @@ template<>
 struct MatrixMultiplier<MultiplicationPolicy::Scalar> {
     template<typename LHS, typename RHS>
     static auto multiply(const LHS& lhs, const RHS& rhs) {
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHS::columns>;
+        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHS::columns, MultiplicationPolicy::Scalar>;
         ResultType result{};
         for (size_t i = 0; i < LHS::rows; ++i) {
             for (size_t j = 0; j < RHS::columns; ++j) {

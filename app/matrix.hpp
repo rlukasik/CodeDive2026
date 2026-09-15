@@ -31,7 +31,7 @@ public:
     }
 
     auto transpose() const {
-        Matrix<T, COLUMNS, ROWS> transposed;
+        Matrix<T, COLUMNS, ROWS, Policy> transposed;
         for (size_t rowIndex = 0; rowIndex < ROWS; ++rowIndex) {
             for (size_t colIndex = 0; colIndex < COLUMNS; ++colIndex) {
                 transposed(colIndex, rowIndex) = (*this)(rowIndex, colIndex);
@@ -45,8 +45,8 @@ public:
     }
 };
 
-template<typename T, size_t ROWS, size_t COLUMNS>
-std::ostream& operator<<(std::ostream& os, const Matrix<T, ROWS, COLUMNS>& matrix)
+template<typename T, size_t ROWS, size_t COLUMNS, MultiplicationPolicy Policy>
+std::ostream& operator<<(std::ostream& os, const Matrix<T, ROWS, COLUMNS, Policy>& matrix)
 {
     for (size_t rowIndex = 0; rowIndex < ROWS; ++rowIndex) {
         for (size_t colIndex = 0; colIndex < COLUMNS; ++colIndex) {
