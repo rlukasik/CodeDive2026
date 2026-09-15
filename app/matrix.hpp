@@ -66,7 +66,7 @@ std::istream& operator>>(std::istream& is, Matrix<T, ROWS, COLUMNS, Policy>& mat
         std::string value;
         size_t colIndex = 0;
         for (size_t columnIndex = 0; columnIndex < COLUMNS && std::getline(rowStream, value, ','); ++colIndex) {
-            matrix(rowIndex, colIndex) = static_cast<T>(std::stod(value));
+            matrix(rowIndex, colIndex) = static_cast<T>(std::stod(value) + 0.5);
         }
     }
     return is;
