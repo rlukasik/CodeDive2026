@@ -7,7 +7,8 @@ template<>
 struct MatrixMultiplier<MultiplicationPolicy::WithTranspose> {
     template<typename LHS, typename RHS>
     static auto multiply(const LHS& lhs, const RHS& rhs) {
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHS::columns, MultiplicationPolicy::WithTranspose>;
+        static_assert(LHS::columns == RHS::rows, "Matrix dimensions do not match for multiplication.");
+        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHS::columns>;
         ResultType result{};
         const auto rhsT = rhs.transpose();
         for (size_t i = 0; i < LHS::rows; ++i) {

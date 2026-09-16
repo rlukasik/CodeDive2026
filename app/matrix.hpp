@@ -8,7 +8,7 @@
 
 #include "matrix_policy.hpp"
 
-template<typename T, size_t ROWS, size_t COLUMNS, MultiplicationPolicy Policy = MultiplicationPolicy::Scalar>
+template<typename T, size_t ROWS, size_t COLUMNS>
 class Matrix{
     std::vector<T> data_;
 public:
@@ -16,7 +16,6 @@ public:
 
     static constexpr size_t rows = ROWS;
     static constexpr size_t columns = COLUMNS;
-    static constexpr MultiplicationPolicy multiplicationPolicy = Policy;
 
     Matrix(): data_(ROWS * COLUMNS, T{}) {}
 
@@ -31,7 +30,7 @@ public:
     }
 
     auto transpose() const {
-        Matrix<T, COLUMNS, ROWS, Policy> transposed;
+        Matrix<T, COLUMNS, ROWS> transposed;
         for (size_t rowIndex = 0; rowIndex < ROWS; ++rowIndex) {
             for (size_t colIndex = 0; colIndex < COLUMNS; ++colIndex) {
                 transposed(colIndex, rowIndex) = (*this)(rowIndex, colIndex);
@@ -45,8 +44,8 @@ public:
     }
 };
 
-template<typename T, size_t ROWS, size_t COLUMNS, MultiplicationPolicy Policy>
-std::ostream& operator<<(std::ostream& os, const Matrix<T, ROWS, COLUMNS, Policy>& matrix)
+template<typename T, size_t ROWS, size_t COLUMNS>
+std::ostream& operator<<(std::ostream& os, const Matrix<T, ROWS, COLUMNS>& matrix)
 {
     for (size_t rowIndex = 0; rowIndex < ROWS; ++rowIndex) {
         for (size_t colIndex = 0; colIndex < COLUMNS; ++colIndex) {
@@ -57,8 +56,8 @@ std::ostream& operator<<(std::ostream& os, const Matrix<T, ROWS, COLUMNS, Policy
     return os;
 }
 
-template<typename T, size_t ROWS, size_t COLUMNS, MultiplicationPolicy Policy>
-std::istream& operator>>(std::istream& is, Matrix<T, ROWS, COLUMNS, Policy>& matrix)
+template<typename T, size_t ROWS, size_t COLUMNS>
+std::istream& operator>>(std::istream& is, Matrix<T, ROWS, COLUMNS>& matrix)
 {
     std::string row;
     for (size_t rowIndex = 0; rowIndex < ROWS && std::getline(is, row); ++rowIndex) {

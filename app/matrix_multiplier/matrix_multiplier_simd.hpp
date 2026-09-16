@@ -9,11 +9,12 @@ template<>
 struct MatrixMultiplier<MultiplicationPolicy::Simd> {
     template<typename LHS, typename RHS>
     static auto multiply(const LHS& lhs, const RHS& rhs) {
+        static_assert(LHS::columns == RHS::rows, "Matrix dimensions do not match for multiplication.");
         using LhsSimd = std::simd::vec<typename LHS::value_type>;
         using RhsSimd = std::simd::vec<typename RHS::value_type>;
         using LhsRange = std::span<const typename LHS::value_type, LhsSimd::size()>;
         using RhsRange = std::span<const typename RHS::value_type, RhsSimd::size()>;
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHS::columns, MultiplicationPolicy::Simd>;
+        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHS::columns>;
         ResultType result{};
         const auto rhsT = rhs.transpose();
         for (size_t i = 0; i < LHS::rows; ++i) {
