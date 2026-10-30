@@ -4,7 +4,8 @@
 #include <simd>
 #include <span>
 #include "matrix.hpp"
-#include "matrix_multiplier.hpp"
+#include "matrix_policy.hpp"
+#include "matrix_multiplier_fwd.hpp"
 #include "matrix_transposed.hpp"
 
 template<>
