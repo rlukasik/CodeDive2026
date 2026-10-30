@@ -3,16 +3,24 @@
 
 #include "matrix.hpp"
 #include "matrix_multiplier.hpp"
+#include "matrix_transposed.hpp"
 
 template<>
 struct MatrixMultiplier<MultiplicationPolicy::Pretransposed> {
-    template<typename LHS, typename RHS_TRANSPOSED>
-    static auto multiply(const LHS& lhs, const RHS_TRANSPOSED& rhsT) {
-        static_assert(LHS::columns == RHS_TRANSPOSED::columns, "Matrix dimensions do not match for multiplication.");
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, RHS_TRANSPOSED::rows>;
+    template<typename LHS, typename RHSType, size_t RHSRows, size_t RHSColumns>
+    static auto multiply(
+        const LHS& lhs,
+        const MatrixTransposed<RHSType, RHSRows, RHSColumns>& rhsT
+    ) {
+        static_assert(
+            LHS::columns == RHSRows,
+            "LHS columns must match the original RHS rows."
+        );
+
+        using ResultType = Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, RHSColumns>;
         ResultType result{};
         for (size_t i = 0; i < LHS::rows; ++i) {
-            for (size_t j = 0; j < RHS_TRANSPOSED::rows; ++j) {
+            for (size_t j = 0; j < RHSColumns; ++j) {
                 auto lhsRow = lhs.getRow(i);
                 auto rhsTRow = rhsT.getRow(j);
                 auto sum = typename ResultType::value_type{};

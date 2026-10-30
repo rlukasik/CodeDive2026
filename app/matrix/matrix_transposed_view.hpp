@@ -17,6 +17,10 @@ public:
 
     MatrixTransposedView(const T&&) = delete;
 
+    auto& operator()(size_t row, size_t col) {
+        return matrix_(col, row);
+    }
+
     const auto& operator()(size_t row, size_t col) const {
         return matrix_(col, row);
     }

@@ -19,7 +19,7 @@ int main()
     file4x16 >> matrix4x16;
     file16x32 >> matrix16x32;
 
-    auto result = MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix4x16, matrix16x32);
+    auto result = MatrixMultiplier<MultiplicationPolicy::Pretransposed>::multiply(matrix4x16, matrix16x32);
 
     std::cout << "Matrix 4x16:" << std::endl;
     std::cout << matrix4x16 << std::endl;
