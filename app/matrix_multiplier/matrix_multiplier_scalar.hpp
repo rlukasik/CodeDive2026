@@ -8,7 +8,11 @@ template<>
 struct MatrixMultiplier<MultiplicationPolicy::Scalar> {
     template<typename LHS, typename RHS>
     static auto multiply(const LHS& lhs, const RHS& rhs) {
-        static_assert(LHS::columns == RHS::rows, "Matrix dimensions do not match for multiplication.");
+        static_assert(
+            LHS::columns == RHS::rows,
+            "LHS columns must match RHS rows."
+        );
+
         using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHS::columns>;
         ResultType result{};
         for (size_t i = 0; i < LHS::rows; ++i) {
