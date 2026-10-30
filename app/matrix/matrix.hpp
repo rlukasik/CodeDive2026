@@ -61,8 +61,7 @@ std::istream& operator>>(std::istream& is, Matrix<T, ROWS, COLUMNS>& matrix)
     for (size_t rowIndex = 0; rowIndex < ROWS && std::getline(is, row); ++rowIndex) {
         std::istringstream rowStream(row);
         std::string value;
-        size_t colIndex = 0;
-        for (size_t columnIndex = 0; columnIndex < COLUMNS && std::getline(rowStream, value, ','); ++colIndex) {
+        for (size_t colIndex = 0; colIndex < COLUMNS && std::getline(rowStream, value, ','); ++colIndex) {
             matrix(rowIndex, colIndex) = static_cast<T>(std::stod(value) + 0.5);
         }
     }

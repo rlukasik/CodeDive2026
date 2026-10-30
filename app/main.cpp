@@ -1,9 +1,9 @@
 #include <fstream>
-#include <memory>
 
 #include "matrix.hpp"
 #include "matrix_multiplier.hpp"
 #include "matrix_transposed.hpp"
+#include "matrix_transposed_view.hpp"
 
 int main()
 {

@@ -5,23 +5,27 @@
 #include <span>
 #include "matrix.hpp"
 #include "matrix_multiplier.hpp"
-#include "matrix_transposed_view.hpp"
 
 template<>
 struct MatrixMultiplier<MultiplicationPolicy::Simd> {
     template<typename LHS, typename RHS_TRANSPOSED>
     static auto multiply(const LHS& lhs, const RHS_TRANSPOSED& rhsT) {
-        const auto rhsView = MatrixTransposedView(rhsT);
-        static_assert(LHS::columns == decltype(rhsView)::rows, "Matrix dimensions do not match for multiplication.");
+        static_assert(LHS::columns == RHS_TRANSPOSED::columns, "Matrix dimensions do not match for multiplication.");
         using LhsSimd = std::simd::vec<typename LHS::value_type>;
         using RhsTSimd = std::simd::vec<typename RHS_TRANSPOSED::value_type>;
+
+        static_assert(
+            LhsSimd::size() == RhsTSimd::size(),
+            "SIMD vector sizes must match."
+        );
+
         using LhsRange = std::span<const typename LHS::value_type, LhsSimd::size()>;
         using RhsTRange = std::span<const typename RHS_TRANSPOSED::value_type, RhsTSimd::size()>;
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, decltype(rhsView)::columns>;
+        using ResultType = Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, RHS_TRANSPOSED::rows>;
         ResultType result{};
         for (size_t i = 0; i < LHS::rows; ++i) {
             auto lhsRow = lhs.getRow(i);
-            for (size_t j = 0; j < decltype(rhsView)::columns; ++j) {
+            for (size_t j = 0; j < RHS_TRANSPOSED::rows; ++j) {
                 auto rhsTRow = rhsT.getRow(j);
 
                 auto sum = typename ResultType::value_type{};
