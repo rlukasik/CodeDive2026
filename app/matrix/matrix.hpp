@@ -1,31 +1,31 @@
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
 
-#include <iostream>
+#include <cstddef>
 #include <vector>
 
-template<typename T, size_t ROWS, size_t COLUMNS>
+template<typename T, std::size_t ROWS, std::size_t COLUMNS>
 class Matrix{
     std::vector<T> data_;
 public:
     using value_type = T;
 
-    static constexpr size_t rows = ROWS;
-    static constexpr size_t columns = COLUMNS;
+    static constexpr std::size_t rows = ROWS;
+    static constexpr std::size_t columns = COLUMNS;
 
     Matrix(): data_(ROWS * COLUMNS, T{}) {}
 
-    T& operator()(size_t row, size_t col)
+    T& operator()(std::size_t row, std::size_t col)
     {
         return data_[row * COLUMNS + col];
     }
     
-    const T& operator()(size_t row, size_t col) const
+    const T& operator()(std::size_t row, std::size_t col) const
     {
         return data_[row * COLUMNS + col];
     }
 
-    const T* getRow(size_t row) const {
+    const T* getRow(std::size_t row) const {
         return &data_[row * COLUMNS];
     }
 };

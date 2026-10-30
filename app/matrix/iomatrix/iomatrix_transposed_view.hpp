@@ -8,8 +8,8 @@
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const MatrixTransposedView<T>& matrix_view)
 {
-    for (size_t rowIndex = 0; rowIndex < MatrixTransposedView<T>::rows; ++rowIndex) {
-        for (size_t colIndex = 0; colIndex < MatrixTransposedView<T>::columns; ++colIndex) {
+    for (std::size_t rowIndex = 0; rowIndex < MatrixTransposedView<T>::rows; ++rowIndex) {
+        for (std::size_t colIndex = 0; colIndex < MatrixTransposedView<T>::columns; ++colIndex) {
             os << matrix_view(rowIndex, colIndex) << " ";
         }
         os << std::endl;

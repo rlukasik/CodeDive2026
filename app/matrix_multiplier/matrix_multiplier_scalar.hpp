@@ -15,9 +15,9 @@ struct MatrixMultiplier<MultiplicationPolicy::Scalar> {
 
         using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHS::columns>;
         ResultType result{};
-        for (size_t i = 0; i < LHS::rows; ++i) {
-            for (size_t j = 0; j < RHS::columns; ++j) {
-                for (size_t k = 0; k < LHS::columns; ++k) {
+        for (std::size_t i = 0; i < LHS::rows; ++i) {
+            for (std::size_t j = 0; j < RHS::columns; ++j) {
+                for (std::size_t k = 0; k < LHS::columns; ++k) {
                     result(i, j) += lhs(i, k) * rhs(k, j);
                 }
             }

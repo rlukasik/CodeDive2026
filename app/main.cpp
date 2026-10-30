@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 
 #include "iomatrix.hpp"
 #include "matrix.hpp"

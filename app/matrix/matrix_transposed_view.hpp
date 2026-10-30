@@ -9,15 +9,15 @@ class MatrixTransposedView {
 public:
     using value_type = typename T::value_type;
     
-    static constexpr size_t rows = T::columns;
-    static constexpr size_t columns = T::rows;
+    static constexpr std::size_t rows = T::columns;
+    static constexpr std::size_t columns = T::rows;
 
     explicit MatrixTransposedView(const T& matrix)
         : matrix_(matrix) {}
 
     MatrixTransposedView(const T&&) = delete;
 
-    const auto& operator()(size_t row, size_t col) const {
+    const auto& operator()(std::size_t row, std::size_t col) const {
         return matrix_(col, row);
     }
 };
