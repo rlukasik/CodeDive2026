@@ -1,6 +1,6 @@
-add_subdirectory(iomatrix)
-
 add_library(matrix INTERFACE)
+
+add_subdirectory(iomatrix)
 
 target_include_directories(matrix
     INTERFACE

@@ -2,8 +2,6 @@
 #define MATRIX_HPP
 
 #include <iostream>
-#include <string>
-#include <sstream>
 #include <vector>
 
 template<typename T, size_t ROWS, size_t COLUMNS>

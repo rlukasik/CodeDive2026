@@ -1,6 +1,8 @@
 #ifndef IOMATRIX_TRANSPOSED_VIEW_HPP
 #define IOMATRIX_TRANSPOSED_VIEW_HPP
 
+#include <iostream>
+
 #include "matrix_transposed_view.hpp"
 
 template<typename T>

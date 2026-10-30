@@ -1,6 +1,10 @@
 #ifndef IOMATRIX_TRANSPOSED_HPP
 #define IOMATRIX_TRANSPOSED_HPP
 
+#include <iostream>
+#include <string>
+#include <sstream>
+
 #include "matrix_transposed.hpp"
 
 template<typename T, size_t ROWS, size_t COLUMNS>

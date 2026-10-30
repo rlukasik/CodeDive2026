@@ -1,6 +1,10 @@
 #ifndef IOMATRIX_BASIC_HPP
 #define IOMATRIX_BASIC_HPP
 
+#include <iostream>
+#include <string>
+#include <sstream>
+
 #include "matrix.hpp"
 
 template<typename T, size_t ROWS, size_t COLUMNS>
