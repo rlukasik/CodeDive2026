@@ -27,16 +27,6 @@ public:
         return data_[row * COLUMNS + col];
     }
 
-    auto transpose() const {
-        Matrix<T, COLUMNS, ROWS> transposed;
-        for (size_t rowIndex = 0; rowIndex < ROWS; ++rowIndex) {
-            for (size_t colIndex = 0; colIndex < COLUMNS; ++colIndex) {
-                transposed(colIndex, rowIndex) = (*this)(rowIndex, colIndex);
-            }
-        }
-        return transposed;
-    }
-
     const T* getRow(size_t row) const {
         return &data_[row * COLUMNS];
     }

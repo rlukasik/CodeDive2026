@@ -4,7 +4,19 @@
 #include "matrix.hpp"
 
 template<typename T, size_t ROWS, size_t COLUMNS>
-class MatrixTransposed: public Matrix<T, COLUMNS, ROWS> {};
+class MatrixTransposed: public Matrix<T, COLUMNS, ROWS> {
+public:
+    MatrixTransposed() = default;
+
+    explicit MatrixTransposed(const Matrix<T, ROWS, COLUMNS>& matrix)
+    {
+        for (size_t rowIndex = 0; rowIndex < ROWS; ++rowIndex) {
+            for (size_t colIndex = 0; colIndex < COLUMNS; ++colIndex) {
+                (*this)(colIndex, rowIndex) = matrix(rowIndex, colIndex);
+            }
+        }
+    }
+};
 
 template<typename T, size_t ROWS, size_t COLUMNS>
 std::istream& operator>>(std::istream& is, MatrixTransposed<T, ROWS, COLUMNS>& matrixTransposed)
