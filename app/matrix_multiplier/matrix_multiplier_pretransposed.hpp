@@ -1,11 +1,11 @@
-#ifndef MATRIX_MULTIPLIER_WITH_TRANSPOSE_HPP
-#define MATRIX_MULTIPLIER_WITH_TRANSPOSE_HPP
+#ifndef MATRIX_MULTIPLIER_PRETRANSPOSED_HPP
+#define MATRIX_MULTIPLIER_PRETRANSPOSED_HPP
 
 #include "matrix.hpp"
 #include "matrix_multiplier.hpp"
 
 template<>
-struct MatrixMultiplier<MultiplicationPolicy::WithTranspose> {
+struct MatrixMultiplier<MultiplicationPolicy::Pretransposed> {
     template<typename LHS, typename RHS_TRANSPOSED>
     static auto multiply(const LHS& lhs, const RHS_TRANSPOSED& rhsT) {
         static_assert(LHS::columns == RHS_TRANSPOSED::columns, "Matrix dimensions do not match for multiplication.");
@@ -26,4 +26,4 @@ struct MatrixMultiplier<MultiplicationPolicy::WithTranspose> {
     }
 };
 
-#endif // MATRIX_MULTIPLIER_WITH_TRANSPOSE_HPP
+#endif // MATRIX_MULTIPLIER_PRETRANSPOSED_HPP

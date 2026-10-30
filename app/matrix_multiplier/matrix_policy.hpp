@@ -3,7 +3,7 @@
 
 enum class MultiplicationPolicy {
     Scalar,
-    WithTranspose,
+    Pretransposed,
     Simd
 };
 

@@ -7,7 +7,7 @@ template<MultiplicationPolicy Policy>
 struct MatrixMultiplier;
 
 #include "matrix_multiplier_scalar.hpp"
-#include "matrix_multiplier_with_transpose.hpp"
+#include "matrix_multiplier_pretransposed.hpp"
 #include "matrix_multiplier_simd.hpp"
 
 #endif // MATRIX_MULTIPLIER_HPP
