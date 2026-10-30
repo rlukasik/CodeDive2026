@@ -3,6 +3,7 @@
 
 #include <simd>
 #include <span>
+#include <type_traits>
 
 #include "matrix.hpp"
 #include "matrix_multiplier_fwd.hpp"
@@ -20,14 +21,13 @@ struct MatrixMultiplier<MultiplicationPolicy::Simd> {
             "LHS columns must match the original RHS rows."
         );
 
-        using LhsSimd = std::simd::vec<typename LHS::value_type>;
-        using RhsTSimd = std::simd::vec<RHSType>;
-
         static_assert(
-            LhsSimd::size() == RhsTSimd::size(),
-            "SIMD vector sizes must match."
+            std::is_same_v<typename LHS::value_type, RHSType>,
+            "Value types must match for SIMD multiplication."
         );
 
+        using LhsSimd = std::simd::vec<typename LHS::value_type>;
+        using RhsTSimd = std::simd::vec<RHSType>;
         using LhsRange = std::span<const typename LHS::value_type, LhsSimd::size()>;
         using RhsTRange = std::span<const RHSType, RhsTSimd::size()>;
         using ResultType = Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, RHSColumns>;

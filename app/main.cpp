@@ -3,6 +3,7 @@
 
 #include "iomatrix.hpp"
 #include "matrix.hpp"
+#include "matrix_cmp.hpp"
 #include "matrix_multiplier.hpp"
 #include "matrix_transposed.hpp"
 #include "matrix_transposed_view.hpp"
@@ -21,7 +22,13 @@ int main()
     file4x16 >> matrix4x16;
     file16x32 >> matrix16x32;
 
+    auto resultScalar = MatrixMultiplier<MultiplicationPolicy::Scalar>::multiply(matrix4x16, MatrixTransposedView(matrix16x32));
     auto result = MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix4x16, matrix16x32);
+
+    if (!matrix_cmp(resultScalar, result)) {
+        std::cerr << "Error: Results from scalar and SIMD multiplication do not match!" << std::endl;
+        return 1;
+    }
 
     std::cout << "Matrix 4x16:" << std::endl;
     std::cout << matrix4x16 << std::endl;

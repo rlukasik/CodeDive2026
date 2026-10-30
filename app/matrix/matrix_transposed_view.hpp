@@ -1,7 +1,7 @@
 #ifndef MATRIX_TRANSPOSED_VIEW_HPP
 #define MATRIX_TRANSPOSED_VIEW_HPP
 
-#include <iostream>
+#include <cstddef>
 
 template<typename T>
 class MatrixTransposedView {
