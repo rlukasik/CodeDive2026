@@ -6,8 +6,6 @@
 #include <sstream>
 #include <vector>
 
-#include "matrix_policy.hpp"
-
 template<typename T, size_t ROWS, size_t COLUMNS>
 class Matrix{
     std::vector<T> data_;

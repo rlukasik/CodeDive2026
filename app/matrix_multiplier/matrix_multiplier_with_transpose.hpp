@@ -1,6 +1,7 @@
 #ifndef MATRIX_MULTIPLIER_WITH_TRANSPOSE_HPP
 #define MATRIX_MULTIPLIER_WITH_TRANSPOSE_HPP
 
+#include "matrix.hpp"
 #include "matrix_multiplier.hpp"
 
 template<>

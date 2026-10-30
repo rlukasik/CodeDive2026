@@ -1,6 +1,7 @@
 #ifndef MATRIX_MULTIPLIER_SCALAR_HPP
 #define MATRIX_MULTIPLIER_SCALAR_HPP
 
+#include "matrix.hpp"
 #include "matrix_multiplier.hpp"
 
 template<>

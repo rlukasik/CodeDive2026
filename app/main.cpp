@@ -3,12 +3,12 @@
 
 #include "matrix.hpp"
 #include "matrix_multiplier.hpp"
-#include "matrix_policy.hpp"
+#include "matrix_transposed.hpp"
 
 int main()
 {
     using MatrixType4x16 = Matrix<int, 4, 16>;
-    using MatrixType16x32 = Matrix<int, 16, 32>;
+    using MatrixType16x32 = MatrixTransposed<int, 16, 32>;
 
     MatrixType4x16 matrix4x16{};
     MatrixType16x32 matrix16x32{};
