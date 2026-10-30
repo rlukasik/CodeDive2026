@@ -36,3 +36,23 @@ target_compile_options(mac PRIVATE
 target_link_options(mac PRIVATE
     # -fsanitize=address
 )
+
+add_executable(unit_tests
+    tests/matrix_multiplier_simd_test.cpp
+)
+
+target_link_libraries(unit_tests PRIVATE
+    iomatrix
+    matrix
+    matrix_cmp
+    matrix_multiplier
+    GTest::gtest_main
+)
+
+target_compile_options(unit_tests PRIVATE
+    -O3
+    -march=native
+)
+
+include(GoogleTest)
+gtest_discover_tests(unit_tests)
