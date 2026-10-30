@@ -12,7 +12,7 @@ add_executable(mac
     main.cpp
 )
 
-target_link_libraries(mac PRIVATE matrix matrix_multiplier)
+target_link_libraries(mac PRIVATE iomatrix matrix matrix_multiplier)
 set_target_properties(mac PROPERTIES CXX_EXTENSIONS OFF)
 
 target_compile_options(mac PRIVATE

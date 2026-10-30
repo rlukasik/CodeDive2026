@@ -1,8 +1,6 @@
 #ifndef MATRIX_MULTIPLIER_HPP
 #define MATRIX_MULTIPLIER_HPP
 
-#include "matrix_policy.hpp"
-
 #include "matrix_multiplier_fwd.hpp"
 
 #include "matrix_multiplier_scalar.hpp"

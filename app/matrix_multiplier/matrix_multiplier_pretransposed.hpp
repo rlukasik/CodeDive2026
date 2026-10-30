@@ -2,7 +2,6 @@
 #define MATRIX_MULTIPLIER_PRETRANSPOSED_HPP
 
 #include "matrix.hpp"
-#include "matrix_policy.hpp"
 #include "matrix_multiplier_fwd.hpp"
 #include "matrix_transposed.hpp"
 

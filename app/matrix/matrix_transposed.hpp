@@ -3,33 +3,19 @@
 
 #include "matrix.hpp"
 
-template<typename T, size_t ROWS, size_t COLUMNS>
-class MatrixTransposed: public Matrix<T, COLUMNS, ROWS> {
+template<typename T, size_t ROWS_ORIG, size_t COLUMNS_ORIG>
+class MatrixTransposed: public Matrix<T, COLUMNS_ORIG, ROWS_ORIG> {
 public:
     MatrixTransposed() = default;
 
-    explicit MatrixTransposed(const Matrix<T, ROWS, COLUMNS>& matrix)
+    explicit MatrixTransposed(const Matrix<T, ROWS_ORIG, COLUMNS_ORIG>& matrix)
     {
-        for (size_t rowIndex = 0; rowIndex < ROWS; ++rowIndex) {
-            for (size_t colIndex = 0; colIndex < COLUMNS; ++colIndex) {
+        for (size_t rowIndex = 0; rowIndex < ROWS_ORIG; ++rowIndex) {
+            for (size_t colIndex = 0; colIndex < COLUMNS_ORIG; ++colIndex) {
                 (*this)(colIndex, rowIndex) = matrix(rowIndex, colIndex);
             }
         }
     }
 };
-
-template<typename T, size_t ROWS, size_t COLUMNS>
-std::istream& operator>>(std::istream& is, MatrixTransposed<T, ROWS, COLUMNS>& matrixTransposed)
-{
-    std::string row;
-    for (size_t rowIndex = 0; rowIndex < ROWS && std::getline(is, row); ++rowIndex) {
-        std::istringstream rowStream(row);
-        std::string value;
-        for (size_t colIndex = 0; colIndex < COLUMNS && std::getline(rowStream, value, ','); ++colIndex) {
-            matrixTransposed(colIndex, rowIndex) = static_cast<T>(std::stod(value) + 0.5);
-        }
-    }
-    return is;
-}
 
 #endif // MATRIX_TRANSPOSED_HPP

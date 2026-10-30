@@ -1,5 +1,6 @@
 #include <fstream>
 
+#include "iomatrix.hpp"
 #include "matrix.hpp"
 #include "matrix_multiplier.hpp"
 #include "matrix_transposed.hpp"
