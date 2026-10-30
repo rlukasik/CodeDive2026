@@ -5,6 +5,16 @@ project(Mac)
 set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include(FetchContent)
+
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG main
+)
+
+FetchContent_MakeAvailable(googletest)
+
 add_subdirectory(matrix)
 add_subdirectory(matrix_cmp)
 add_subdirectory(matrix_multiplier)
@@ -20,9 +30,9 @@ target_compile_options(mac PRIVATE
     -O3
     -march=native
     -g
-    -fsanitize=address
+    # -fsanitize=address
 )
 
 target_link_options(mac PRIVATE
-    -fsanitize=address
+    # -fsanitize=address
 )
