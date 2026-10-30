@@ -9,12 +9,12 @@ template<>
 struct MatrixMultiplier<MultiplicationPolicy::WithTranspose> {
     template<typename LHS, typename RHS_TRANSPOSED>
     static auto multiply(const LHS& lhs, const RHS_TRANSPOSED& rhsT) {
-        const auto rhsTransposedView = MatrixTransposedView(rhsT);
-        static_assert(LHS::columns == decltype(rhsTransposedView)::rows, "Matrix dimensions do not match for multiplication.");
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, decltype(rhsTransposedView)::columns>;
+        const auto rhsView = MatrixTransposedView(rhsT);
+        static_assert(LHS::columns == decltype(rhsView)::rows, "Matrix dimensions do not match for multiplication.");
+        using ResultType = Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, decltype(rhsView)::columns>;
         ResultType result{};
         for (size_t i = 0; i < LHS::rows; ++i) {
-            for (size_t j = 0; j < decltype(rhsTransposedView)::columns; ++j) {
+            for (size_t j = 0; j < decltype(rhsView)::columns; ++j) {
                 auto lhsRow = lhs.getRow(i);
                 auto rhsTRow = rhsT.getRow(j);
                 auto sum = typename ResultType::value_type{};

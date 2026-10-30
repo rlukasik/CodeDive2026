@@ -21,6 +21,12 @@ int main()
 
     auto result = MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix4x16, matrix16x32);
 
+    std::cout << "Matrix 4x16:" << std::endl;
+    std::cout << matrix4x16 << std::endl;
+    std::cout << "Matrix 16x32 (transposed):" << std::endl;
+    std::cout << matrix16x32 << std::endl;
+    std::cout << "Matrix 16x32 (transposed view):" << std::endl;
+    std::cout << MatrixTransposedView(matrix16x32) << std::endl << std::endl;
     std::cout << "Result of multiplication:" << std::endl;
     std::cout << result << std::endl;
 
