@@ -9,32 +9,32 @@
 
 template<>
 struct MatrixMultiplier<MultiplicationPolicy::Simd> {
-    template<typename LHS, typename RHS>
-    static auto multiply(const LHS& lhs, const RHS& rhs) {
-        const auto rhsTransposedView = MatrixTransposedView(rhs);
+    template<typename LHS, typename RHS_TRANSPOSED>
+    static auto multiply(const LHS& lhs, const RHS_TRANSPOSED& rhsT) {
+        const auto rhsTransposedView = MatrixTransposedView(rhsT);
         static_assert(LHS::columns == decltype(rhsTransposedView)::rows, "Matrix dimensions do not match for multiplication.");
         using LhsSimd = std::simd::vec<typename LHS::value_type>;
-        using RhsSimd = std::simd::vec<typename RHS::value_type>;
+        using RhsTSimd = std::simd::vec<typename RHS_TRANSPOSED::value_type>;
         using LhsRange = std::span<const typename LHS::value_type, LhsSimd::size()>;
-        using RhsRange = std::span<const typename RHS::value_type, RhsSimd::size()>;
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, decltype(rhsTransposedView)::columns>;
+        using RhsTRange = std::span<const typename RHS_TRANSPOSED::value_type, RhsTSimd::size()>;
+        using ResultType = Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, decltype(rhsTransposedView)::columns>;
         ResultType result{};
         for (size_t i = 0; i < LHS::rows; ++i) {
             auto lhsRow = lhs.getRow(i);
             for (size_t j = 0; j < decltype(rhsTransposedView)::columns; ++j) {
-                auto rhsRow = rhs.getRow(j);
+                auto rhsTRow = rhsT.getRow(j);
 
                 auto sum = typename ResultType::value_type{};
                 size_t k = 0;
                 for (; k + LhsSimd::size() <= LHS::columns; k += LhsSimd::size()) {
                     LhsRange lhsRange{lhsRow + k, LhsSimd::size()};
-                    RhsRange rhsRange{rhsRow + k, RhsSimd::size()};
+                    RhsTRange rhsTRange{rhsTRow + k, RhsTSimd::size()};
                     LhsSimd lhsVec{lhsRange};
-                    RhsSimd rhsVec{rhsRange};
-                    sum += std::simd::reduce(lhsVec * rhsVec);
+                    RhsTSimd rhsTVec{rhsTRange};
+                    sum += std::simd::reduce(lhsVec * rhsTVec);
                 }
                 for (; k < LHS::columns; ++k) {
-                    sum += lhsRow[k] * rhsRow[k];
+                    sum += lhsRow[k] * rhsTRow[k];
                 }
                 result(i, j) = sum;
             }

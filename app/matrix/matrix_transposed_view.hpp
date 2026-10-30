@@ -16,7 +16,6 @@ public:
     const auto& operator()(size_t row, size_t col) const {
         return matrix_(col, row);
     }
-
 };
 
 #endif // MATRIX_TRANSPOSED_VIEW_HPP
