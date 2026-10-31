@@ -22,7 +22,7 @@ int main()
     file4x16 >> matrix4x16;
     file16x32 >> matrix16x32;
 
-    auto resultScalar = MatrixMultiplier<MultiplicationPolicy::Scalar>::multiply(matrix4x16, MatrixTransposedView(matrix16x32));
+    auto resultScalar = MatrixMultiplier<MultiplicationPolicy::Scalar>::multiply(matrix4x16, matrix16x32);
     auto result = MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix4x16, matrix16x32);
 
     if (!matrix_cmp(resultScalar, result)) {

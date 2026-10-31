@@ -40,6 +40,7 @@ target_link_options(mac PRIVATE
 add_executable(unit_tests
     tests/matrix_multiplier_simd_test.cpp
     tests/matrix_multiplier_pretransposed_test.cpp
+    tests/matrix_multiplier_scalar_test.cpp
 )
 
 target_link_libraries(unit_tests PRIVATE
