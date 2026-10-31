@@ -9,10 +9,11 @@ template<typename T>
 std::ostream& operator<<(std::ostream& os, const MatrixTransposedView<T>& matrix_view)
 {
     for (std::size_t rowIndex = 0; rowIndex < MatrixTransposedView<T>::rows; ++rowIndex) {
-        for (std::size_t colIndex = 0; colIndex < MatrixTransposedView<T>::columns; ++colIndex) {
-            os << matrix_view(rowIndex, colIndex) << " ";
+        std::size_t colIndex = 0;
+        for (; colIndex < MatrixTransposedView<T>::columns-1; ++colIndex) {
+            os << matrix_view(rowIndex, colIndex) << ",";
         }
-        os << std::endl;
+        os << matrix_view(rowIndex, colIndex) << std::endl;
     }
     return os;
 }

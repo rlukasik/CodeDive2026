@@ -13,10 +13,11 @@ template<typename T, std::size_t ROWS, std::size_t COLUMNS>
 std::ostream& operator<<(std::ostream& os, const Matrix<T, ROWS, COLUMNS>& matrix)
 {
     for (std::size_t rowIndex = 0; rowIndex < ROWS; ++rowIndex) {
-        for (std::size_t colIndex = 0; colIndex < COLUMNS; ++colIndex) {
-            os << matrix(rowIndex, colIndex) << " ";
+        std::size_t colIndex = 0;
+        for (; colIndex < COLUMNS-1; ++colIndex) {
+            os << matrix(rowIndex, colIndex) << ",";
         }
-        os << std::endl;
+        os << matrix(rowIndex, colIndex) << std::endl;
     }
     return os;
 }
