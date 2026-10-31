@@ -29,7 +29,7 @@ set_target_properties(mac PROPERTIES CXX_EXTENSIONS OFF)
 target_compile_options(mac PRIVATE
     -O3
     -march=native
-    -g
+    # -g
     # -fsanitize=address
 )
 
@@ -39,6 +39,7 @@ target_link_options(mac PRIVATE
 
 add_executable(unit_tests
     tests/matrix_multiplier_simd_test.cpp
+    tests/matrix_multiplier_pretransposed_test.cpp
 )
 
 target_link_libraries(unit_tests PRIVATE
