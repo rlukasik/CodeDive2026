@@ -38,14 +38,18 @@ struct MatrixMultiplier<MultiplicationPolicy::Simd> {
                 auto rhsTRow = rhsT.getRow(j);
 
                 auto sum = typename ResultType::value_type{};
+                LhsSimd vectorSum{};
                 std::size_t k = 0;
                 for (; k + LhsSimd::size() <= LHS::columns; k += LhsSimd::size()) {
                     LhsRange lhsRange{lhsRow + k, LhsSimd::size()};
                     RhsTRange rhsTRange{rhsTRow + k, RhsTSimd::size()};
                     LhsSimd lhsVec{lhsRange};
                     RhsTSimd rhsTVec{rhsTRange};
-                    sum += std::simd::reduce(lhsVec * rhsTVec);
+                    vectorSum += lhsVec * rhsTVec;
                 }
+
+                sum = std::simd::reduce(vectorSum);
+
                 for (; k < LHS::columns; ++k) {
                     sum += lhsRow[k] * rhsTRow[k];
                 }
