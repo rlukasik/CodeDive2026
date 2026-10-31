@@ -15,3 +15,9 @@ TEST_F(MatrixMultiplierTest, PretransposedMultiplies1024x2048By2048x3072Correctl
 
     EXPECT_TRUE(matrix_cmp(result, expectedLargeResult));
 }
+
+TEST_F(MatrixMultiplierTest, PretransposedMultiplies1024x2048By2048x3072DoubleCorrectly) {
+    auto result = MatrixMultiplier<MultiplicationPolicy::Pretransposed>::multiply(matrix1024x2048Double, matrix2048x3072Double);
+
+    EXPECT_TRUE(matrix_cmp(result, expectedLargeResultDouble));
+}

@@ -29,6 +29,7 @@ set_target_properties(mac PROPERTIES CXX_EXTENSIONS OFF)
 target_compile_options(mac PRIVATE
     -O3
     -march=native
+    -ffast-math
     # -g
     # -fsanitize=address
 )
@@ -54,6 +55,7 @@ target_link_libraries(unit_tests PRIVATE
 target_compile_options(unit_tests PRIVATE
     -O3
     -march=native
+    -ffast-math
 )
 
 include(GoogleTest)

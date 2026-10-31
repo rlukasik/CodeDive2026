@@ -16,11 +16,17 @@ int main()
     using MatrixType1024x2048 = Matrix<int, 1024, 2048>;
     using MatrixType2048x3072 = MatrixTransposed<int, 2048, 3072>;
 
+    using MatrixType1024x2048Double = Matrix<double, 1024, 2048>;
+    using MatrixType2048x3072Double = MatrixTransposed<double, 2048, 3072>;
+
     MatrixType4x16 matrix4x16{};
     MatrixType16x32 matrix16x32{};
 
     MatrixType1024x2048 matrix1024x2048{};
     MatrixType2048x3072 matrix2048x3072{};
+
+    MatrixType1024x2048Double matrix1024x2048Double{};
+    MatrixType2048x3072Double matrix2048x3072Double{};
 
     std::ifstream file4x16("../input/matrix_4x16.csv");
     std::ifstream file16x32("../input/matrix_16x32.csv");
@@ -67,6 +73,32 @@ int main()
     std::cout << MatrixTransposedView(matrix2048x3072) << std::endl << std::endl;
     std::cout << "Result of multiplication for large matrices:" << std::endl;
     std::cout << resultLarge << std::endl;
+
+    file1024x2048.clear();
+    file1024x2048.seekg(0, std::ios::beg);
+
+    file2048x3072.clear();
+    file2048x3072.seekg(0, std::ios::beg);
+
+    file1024x2048 >> matrix1024x2048Double;
+    file2048x3072 >> matrix2048x3072Double;
+
+    auto resultLargeDoubleScalar = MatrixMultiplier<MultiplicationPolicy::Scalar>::multiply(matrix1024x2048Double, matrix2048x3072Double);
+    auto resultLargeDouble = MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix1024x2048Double, matrix2048x3072Double);
+
+    if (!matrix_cmp(resultLargeDoubleScalar, resultLargeDouble)) {
+        std::cerr << "Error: Results from scalar and SIMD multiplication do not match for large double matrices!" << std::endl;
+        return 1;
+    }
+
+    std::cout << "Matrix 1024x2048 (double):" << std::endl;
+    std::cout << matrix1024x2048Double << std::endl;
+    std::cout << "Matrix 2048x3072 (transposed, double):" << std::endl;
+    std::cout << matrix2048x3072Double << std::endl;
+    std::cout << "Matrix 2048x3072 (transposed view, double):" << std::endl;
+    std::cout << MatrixTransposedView(matrix2048x3072Double) << std::endl << std::endl;
+    std::cout << "Result of multiplication for large double matrices:" << std::endl;
+    std::cout << resultLargeDouble << std::endl;
 
     return 0;
 }
