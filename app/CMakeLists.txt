@@ -54,7 +54,6 @@ target_link_options(mac PRIVATE
 
 add_executable(unit_tests
     tests/matrix_multiplier_simd_test.cpp
-    tests/matrix_multiplier_pretransposed_test.cpp
     tests/matrix_multiplier_scalar_test.cpp
 )
 
@@ -77,7 +76,6 @@ gtest_discover_tests(unit_tests)
 
 add_executable(matrix_bench
     benchmarks/matrix_multiplier_simd_benchmark.cpp
-    benchmarks/matrix_multiplier_pretransposed_benchmark.cpp
     benchmarks/matrix_multiplier_scalar_benchmark.cpp
 )
 
