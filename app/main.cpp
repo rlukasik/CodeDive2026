@@ -11,13 +11,13 @@
 int main()
 {
     using MatrixType4x16 = Matrix<int, 4, 16>;
-    using MatrixType16x32 = MatrixTransposed<int, 16, 32>;
+    using MatrixType16x32 = MatrixTransposed<int, 32, 16>;
 
     using MatrixType1024x2048 = Matrix<int, 1024, 2048>;
-    using MatrixType2048x3072 = MatrixTransposed<int, 2048, 3072>;
+    using MatrixType2048x3072 = MatrixTransposed<int, 3072, 2048>;
 
     using MatrixType1024x2048Double = Matrix<double, 1024, 2048>;
-    using MatrixType2048x3072Double = MatrixTransposed<double, 2048, 3072>;
+    using MatrixType2048x3072Double = MatrixTransposed<double, 3072, 2048>;
 
     MatrixType4x16 matrix4x16{};
     MatrixType16x32 matrix16x32{};

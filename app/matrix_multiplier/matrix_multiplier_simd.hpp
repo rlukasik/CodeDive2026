@@ -11,30 +11,30 @@
 
 template<>
 struct MatrixMultiplier<MultiplicationPolicy::Simd> {
-    template<typename LHS, typename RHSType, std::size_t RHSRows, std::size_t RHSColumns>
+    template<typename LHS, typename RHSTType, std::size_t RHSTRows, std::size_t RHSTColumns>
     static auto multiply(
         const LHS& lhs,
-        const MatrixTransposed<RHSType, RHSRows, RHSColumns>& rhsT
+        const MatrixTransposed<RHSTType, RHSTRows, RHSTColumns>& rhsT
     ) {
         static_assert(
-            LHS::columns == RHSRows,
-            "LHS columns must match the original RHS rows."
+            LHS::columns == RHSTColumns,
+            "LHS columns must match RHST (T - Transposed) columns."
         );
 
         static_assert(
-            std::is_same_v<typename LHS::value_type, RHSType>,
+            std::is_same_v<typename LHS::value_type, RHSTType>,
             "Value types must match for SIMD multiplication."
         );
 
         using LhsSimd = std::simd::vec<typename LHS::value_type>;
-        using RhsTSimd = std::simd::vec<RHSType>;
+        using RhsTSimd = std::simd::vec<RHSTType>;
         using LhsRange = std::span<const typename LHS::value_type, LhsSimd::size()>;
-        using RhsTRange = std::span<const RHSType, RhsTSimd::size()>;
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, RHSColumns>;
+        using RhsTRange = std::span<const RHSTType, RhsTSimd::size()>;
+        using ResultType = Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, RHSTRows>;
         ResultType result{};
         for (std::size_t i = 0; i < LHS::rows; ++i) {
             auto lhsRow = lhs.getRow(i);
-            for (std::size_t j = 0; j < RHSColumns; ++j) {
+            for (std::size_t j = 0; j < RHSTRows; ++j) {
                 auto rhsTRow = rhsT.getRow(j);
 
                 auto sum = typename ResultType::value_type{};

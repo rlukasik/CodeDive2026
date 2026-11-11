@@ -8,21 +8,21 @@
 
 template<>
 struct MatrixMultiplier<MultiplicationPolicy::Scalar> {
-    template<typename LHS, typename RHSType, std::size_t RHSRows, std::size_t RHSColumns>
+    template<typename LHS, typename RHSTType, std::size_t RHSTRows, std::size_t RHSTColumns>
     static auto multiply(
         const LHS& lhs, 
-        const MatrixTransposed<RHSType, RHSRows, RHSColumns>& rhsT
+        const MatrixTransposed<RHSTType, RHSTRows, RHSTColumns>& rhsT
     ) {
         static_assert(
-            LHS::columns == RHSRows,
-            "LHS columns must match RHS rows."
+            LHS::columns == RHSTColumns,
+            "LHS columns must match RHST (T - Transposed) columns."
         );
 
         auto rhs = MatrixTransposedView(rhsT);
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHSColumns>;
+        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHSTRows>;
         ResultType result{};
         for (std::size_t i = 0; i < LHS::rows; ++i) {
-            for (std::size_t j = 0; j < RHSColumns; ++j) {
+            for (std::size_t j = 0; j < RHSTRows; ++j) {
                 auto sum = typename ResultType::value_type{};
                 for (std::size_t k = 0; k < LHS::columns; ++k) {
                     sum += lhs(i, k) * rhs(k, j);
