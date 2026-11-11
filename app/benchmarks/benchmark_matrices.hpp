@@ -1,6 +1,7 @@
 #ifndef BENCHMARK_MATRICES_HPP
 #define BENCHMARK_MATRICES_HPP
 
+#include <iostream>
 #include <fstream>
 
 #include "iomatrix.hpp"
@@ -12,6 +13,9 @@ const auto& benchmark_matrices()
 {
     using Lhs = Matrix<T, 1024, 2048>;
     using RhsT = MatrixTransposed<T, 2048, 3072>;
+
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
 
     static const auto matrices = [] {
         Lhs lhs{};

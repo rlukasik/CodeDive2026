@@ -2,6 +2,7 @@
 #define MATRIX_MULTIPLIER_TEST_HPP
 
 #include <gtest/gtest.h>
+#include <iostream>
 #include <fstream>
 
 #include "iomatrix.hpp"
@@ -35,6 +36,9 @@ protected:
     inline static ExpectedTypeLargeDouble expectedLargeResultDouble{};
 
     static void SetUpTestSuite() {
+        std::ios::sync_with_stdio(false);
+        std::cin.tie(nullptr);
+
         // Code here will be called once before all tests in this test suite.
         std::ifstream file4x16("../input/matrix_4x16.csv");
         std::ifstream file16x32("../input/matrix_16x32.csv");
