@@ -88,4 +88,6 @@ target_compile_options(matrix_bench PRIVATE
     -O3
     -march=native
     -ffast-math
+    -fopt-info-vec-optimized
+    -fopt-info-vec-missed
 )

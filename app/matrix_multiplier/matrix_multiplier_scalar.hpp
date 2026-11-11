@@ -23,9 +23,11 @@ struct MatrixMultiplier<MultiplicationPolicy::Scalar> {
         ResultType result{};
         for (std::size_t i = 0; i < LHS::rows; ++i) {
             for (std::size_t j = 0; j < RHSColumns; ++j) {
+                auto sum = typename ResultType::value_type{};
                 for (std::size_t k = 0; k < LHS::columns; ++k) {
-                    result(i, j) += lhs(i, k) * rhs(k, j);
+                    sum += lhs(i, k) * rhs(k, j);
                 }
+                result(i, j) = sum;
             }
         }
         return result;
