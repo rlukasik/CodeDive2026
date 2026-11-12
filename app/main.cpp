@@ -37,8 +37,10 @@ int main()
     file4x16 >> matrix4x16;
     file16x32 >> matrix16x32;
 
-    auto resultScalar = MatrixMultiplier<MultiplicationPolicy::Scalar>::multiply(matrix4x16, matrix16x32);
-    auto result = MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix4x16, matrix16x32);
+    auto resultScalar = Matrix<decltype(matrix4x16(0, 0) * matrix16x32(0, 0)), MatrixType4x16::rows, MatrixType16x32::rows>{};
+    auto result = Matrix<decltype(matrix4x16(0, 0) * matrix16x32(0, 0)), MatrixType4x16::rows, MatrixType16x32::rows>{};
+    MatrixMultiplier<MultiplicationPolicy::Scalar>::multiply(matrix4x16, matrix16x32, resultScalar);
+    MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix4x16, matrix16x32, result);
 
     if (!matrix_cmp(resultScalar, result)) {
         std::cerr << "Error: Results from scalar and SIMD multiplication do not match!" << std::endl;
@@ -57,8 +59,10 @@ int main()
     file1024x2048 >> matrix1024x2048;
     file2048x3072 >> matrix2048x3072;
 
-    auto resultLargeScalar = MatrixMultiplier<MultiplicationPolicy::Scalar>::multiply(matrix1024x2048, matrix2048x3072);
-    auto resultLarge = MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix1024x2048, matrix2048x3072);
+    auto resultLargeScalar = Matrix<decltype(matrix1024x2048(0, 0) * matrix2048x3072(0, 0)), MatrixType1024x2048::rows, MatrixType2048x3072::rows>{};
+    auto resultLarge = Matrix<decltype(matrix1024x2048(0, 0) * matrix2048x3072(0, 0)), MatrixType1024x2048::rows, MatrixType2048x3072::rows>{};
+    MatrixMultiplier<MultiplicationPolicy::Scalar>::multiply(matrix1024x2048, matrix2048x3072, resultLargeScalar);
+    MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix1024x2048, matrix2048x3072, resultLarge);
 
     if (!matrix_cmp(resultLargeScalar, resultLarge)) {
         std::cerr << "Error: Results from scalar and SIMD multiplication do not match for large matrices!" << std::endl;
@@ -83,8 +87,10 @@ int main()
     file1024x2048 >> matrix1024x2048Double;
     file2048x3072 >> matrix2048x3072Double;
 
-    auto resultLargeDoubleScalar = MatrixMultiplier<MultiplicationPolicy::Scalar>::multiply(matrix1024x2048Double, matrix2048x3072Double);
-    auto resultLargeDouble = MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix1024x2048Double, matrix2048x3072Double);
+    auto resultLargeDoubleScalar = Matrix<decltype(matrix1024x2048Double(0, 0) * matrix2048x3072Double(0, 0)), MatrixType1024x2048Double::rows, MatrixType2048x3072Double::rows>{};
+    auto resultLargeDouble = Matrix<decltype(matrix1024x2048Double(0, 0) * matrix2048x3072Double(0, 0)), MatrixType1024x2048Double::rows, MatrixType2048x3072Double::rows>{};
+    MatrixMultiplier<MultiplicationPolicy::Scalar>::multiply(matrix1024x2048Double, matrix2048x3072Double, resultLargeDoubleScalar);
+    MatrixMultiplier<MultiplicationPolicy::Simd>::multiply(matrix1024x2048Double, matrix2048x3072Double, resultLargeDouble);
 
     if (!matrix_cmp(resultLargeDoubleScalar, resultLargeDouble)) {
         std::cerr << "Error: Results from scalar and SIMD multiplication do not match for large double matrices!" << std::endl;

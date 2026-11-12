@@ -9,9 +9,10 @@
 template<>
 struct MatrixMultiplier<MultiplicationPolicy::Scalar> {
     template<typename LHS, typename RHSTType, std::size_t RHSTRows, std::size_t RHSTColumns>
-    static auto multiply(
+    static auto& multiply(
         const LHS& lhs, 
-        const MatrixTransposed<RHSTType, RHSTRows, RHSTColumns>& rhsT
+        const MatrixTransposed<RHSTType, RHSTRows, RHSTColumns>& rhsT,
+        Matrix<decltype(lhs(0, 0) * rhsT(0, 0)), LHS::rows, RHSTRows>& result
     ) {
         static_assert(
             LHS::columns == RHSTColumns,
@@ -19,11 +20,10 @@ struct MatrixMultiplier<MultiplicationPolicy::Scalar> {
         );
 
         auto rhs = MatrixTransposedView(rhsT);
-        using ResultType = Matrix<decltype(lhs(0, 0) * rhs(0, 0)), LHS::rows, RHSTRows>;
-        ResultType result{};
+        using Result = std::remove_cvref_t<decltype(result)>;
         for (std::size_t i = 0; i < LHS::rows; ++i) {
             for (std::size_t j = 0; j < RHSTRows; ++j) {
-                auto sum = typename ResultType::value_type{};
+                auto sum = typename Result::value_type{};
                 for (std::size_t k = 0; k < LHS::columns; ++k) {
                     sum += lhs(i, k) * rhs(k, j);
                 }
